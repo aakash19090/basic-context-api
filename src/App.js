@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import ThemeContext from './ThemeContext'
+import Theme from './Theme'
+class App extends Component {
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+            primaryTheme: 'theme1',
+            primaryThemeColor: '#496bbe',
+            secondaryTheme: 'theme2',
+            secondaryThemeColor: '#cccccc',
+            activetheme: 'Theme 1'
+        }
+    }
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    changeTheme = () => {
+        const currTheme = this.state.activetheme
+        if(currTheme === 'Theme 1' ){
+            this.setState({
+                ...this.state,
+                activetheme: 'Theme 2'
+            })
+        }else{
+            this.setState({
+                ...this.state,
+                activetheme: 'Theme 1'
+            })
+        }
+
+    }
+    
+    render() {
+        return (
+            <ThemeContext.Provider value={{
+                state: this.state,
+                changeTheme: this.changeTheme
+            }} >
+                <div className="App">
+                    <Theme/>
+                </div>
+            </ThemeContext.Provider>
+                
+        )
+    }
 }
 
-export default App;
+export default App
