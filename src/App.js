@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import ChildComponent from './ChildComponent';
+
 class App extends Component {
     
     constructor(props) {
@@ -9,6 +11,7 @@ class App extends Component {
         }
 
         this.inputRef = React.createRef()
+        this.forwardRef = React.createRef() // ? Will Forward this Ref to Child Component
     }
     
 
@@ -18,7 +21,7 @@ class App extends Component {
         let inputElem = this.inputRef.current
         inputElem.focus()
         inputElem.classList.toggle('toggle')
-        this.setState( { inputVal: 'Toggled'  } )
+        this.setState( { inputVal: 'Parent Toggled'  } )
     }
 
     render() {
@@ -26,7 +29,10 @@ class App extends Component {
         return (
             <div>
                 <input ref={this.inputRef} type="text" value={this.state.inputVal} onChange={(e) => this.setState( { inputVal: e.target.value  } ) } />
-                <button onClick={this.setFocus} > Click Here </button>
+                <button onClick={this.setFocus} > Parent - Click Here </button>
+                
+                {/* Forwarding Ref to Child Component */}
+                <ChildComponent ref={this.forwardRef} />
             </div>    
 
         )
